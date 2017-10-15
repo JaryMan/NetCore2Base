@@ -1,0 +1,11 @@
+E:\ASP.NET项目\netcore2\netcore2\Web\bin\Debug\netcoreapp2.0\Web.deps.json
+E:\ASP.NET项目\netcore2\netcore2\Web\bin\Debug\netcoreapp2.0\Web.runtimeconfig.json
+E:\ASP.NET项目\netcore2\netcore2\Web\bin\Debug\netcoreapp2.0\Web.runtimeconfig.dev.json
+E:\ASP.NET项目\netcore2\netcore2\Web\bin\Debug\netcoreapp2.0\Web.dll
+E:\ASP.NET项目\netcore2\netcore2\Web\bin\Debug\netcoreapp2.0\Web.pdb
+E:\ASP.NET项目\netcore2\netcore2\Web\obj\Debug\netcoreapp2.0\Web.csprojResolveAssemblyReference.cache
+E:\ASP.NET项目\netcore2\netcore2\Web\obj\Debug\netcoreapp2.0\Web.csproj.CoreCompileInputs.cache
+E:\ASP.NET项目\netcore2\netcore2\Web\obj\Debug\netcoreapp2.0\Web.AssemblyInfoInputs.cache
+E:\ASP.NET项目\netcore2\netcore2\Web\obj\Debug\netcoreapp2.0\Web.AssemblyInfo.cs
+E:\ASP.NET项目\netcore2\netcore2\Web\obj\Debug\netcoreapp2.0\Web.dll
+E:\ASP.NET项目\netcore2\netcore2\Web\obj\Debug\netcoreapp2.0\Web.pdb

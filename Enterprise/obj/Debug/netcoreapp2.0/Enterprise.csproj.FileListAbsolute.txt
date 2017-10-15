@@ -1,0 +1,6 @@
+E:\ASP.NET项目\netcore2\netcore2\Enterprise\bin\Debug\netcoreapp2.0\Enterprise.deps.json
+E:\ASP.NET项目\netcore2\netcore2\Enterprise\bin\Debug\netcoreapp2.0\Enterprise.dll
+E:\ASP.NET项目\netcore2\netcore2\Enterprise\obj\Debug\netcoreapp2.0\Enterprise.csprojResolveAssemblyReference.cache
+E:\ASP.NET项目\netcore2\netcore2\Enterprise\obj\Debug\netcoreapp2.0\Enterprise.csproj.CoreCompileInputs.cache
+E:\ASP.NET项目\netcore2\netcore2\Enterprise\obj\Debug\netcoreapp2.0\Enterprise.AssemblyInfoInputs.cache
+E:\ASP.NET项目\netcore2\netcore2\Enterprise\obj\Debug\netcoreapp2.0\Enterprise.AssemblyInfo.cs

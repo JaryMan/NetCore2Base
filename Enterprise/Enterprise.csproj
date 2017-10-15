@@ -1,0 +1,36 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp2.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Folder Include="DataBase\Data\Extend\" />
+    <Folder Include="DataBase\Model\Extend\" />
+    <Folder Include="DataBase\Enmu\" />
+    <Folder Include="DataBase\Service\Extend\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Dapper" Version="1.50.2" />
+    <PackageReference Include="T4" Version="2.0.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="DataBase\Data\Base\DALAuto.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>DALAuto.cs</LastGenOutput>
+    </None>
+    <None Update="DataBase\Model\Base\ModelAuto.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+    </None>
+    <None Update="DataBase\Service\Base\BLLAuto.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+    </None>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Service Include="{508349b6-6b84-4df5-91f0-309beebad82d}" />
+  </ItemGroup>
+
+</Project>

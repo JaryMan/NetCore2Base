@@ -1,0 +1,123 @@
+﻿<#@ template debug="true" hostspecific="true" language="C#"  #>
+<#@ output extension=".cs" #>
+<#@ assembly name="System.Core"#>
+<#@ import namespace="System"#>
+<#@ import namespace="System.Collections.Generic"#>
+<#@ include file="../DBSchema.ttinclude"#>
+<#@ include file="../MultiDocument.ttinclude"#>
+<# var manager = new Manager(Host, GenerationEnvironment, true) { OutputPath = Path.GetDirectoryName(Host.TemplateFile)}; #>
+
+<#
+    var dbSchema=DBSchemaFactory.GetDBSchema();
+    List<string> tableList=dbSchema.GetTablesList();
+    foreach(string tableName in tableList)
+    {
+        manager.StartBlock(tableName+"Service.cs");
+        Table table=dbSchema.GetTableMetadata(tableName);        
+#>
+using AspNetCore.Demo.Enterprise.DataBase.Data;
+using AspNetCore.Demo.Enterprise.DataBase.Model;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+
+namespace AspNetCore.Demo.Enterprise.DataBase.Service
+{
+    public static partial class <#=tableName#>Serivce
+    {
+        /// <summary>
+        /// 根据ID查询记录
+        /// </summary>
+        /// <param name="id">id</param>
+        /// <returns></returns>
+        public static <#=tableName#> QueryForId(this <#=tableName#> entity)
+        {
+            <#=tableName#>Data data = new <#=tableName#>Data();
+            return data.QueryForId(entity);
+        }
+
+        /// <summary>
+        /// 查询所有记录
+        /// </summary>
+        /// <returns></returns>
+        public static IList<<#=tableName#>> QueryAll(this <#=tableName#> entity)
+        {
+            <#=tableName#>Data data = new <#=tableName#>Data();
+            return data.QueryAll();
+        }
+
+        /// <summary>
+        /// 根据查询数量获取记录
+        /// </summary>
+        /// <param name="count">记录数</param>
+        /// <returns></returns>
+        public static IList<<#=tableName#>> QueryForCount(this <#=tableName#> entity,int count = 10)
+        {
+            <#=tableName#>Data data = new <#=tableName#>Data();
+            return data.QueryForCount(count);
+        }
+
+        /// <summary>
+        /// 查询总记录数
+        /// </summary>
+        /// <returns></returns>
+        public static int QueryTotalCount(this <#=tableName#> entity)
+        {
+            <#=tableName#>Data data = new <#=tableName#>Data();
+            return data.QueryTotalCount();
+        }
+
+        /// <summary>
+        /// 分页查询
+        /// </summary>
+        /// <param name="pageIndex">页码</param>
+        /// <param name="pageCount">显示数</param>
+        /// <returns></returns>
+        public static IList<<#=tableName#>> QueryPageList(this <#=tableName#> entity,int pageIndex = 1,int pageCount = 10)
+        {
+            <#=tableName#>Data data = new <#=tableName#>Data();
+            return data.QueryPageList(pageIndex, pageCount);
+        }
+
+        /// <summary>
+        /// 插入单条信息
+        /// </summary>
+        /// <param name="entity">实体</param>
+        /// <returns></returns>
+        public static bool Insert(this <#=tableName#> entity)
+        {
+            <#=tableName#>Data data = new <#=tableName#>Data();
+            return data.Insert(entity) > 0;
+        }
+
+        /// <summary>
+        /// 根据ID更新数据
+        /// </summary>
+        /// <param name="entity"></param>
+        /// <returns></returns>
+        public static bool Update(this <#=tableName#> entity)
+        {
+            <#=tableName#>Data data = new <#=tableName#>Data();
+            return data.Update(entity) > 0;
+        }
+
+        /// <summary>
+        /// 根据ID删除记录(isRealDel为true则真删除)
+        /// </summary>
+        /// <param name="id">id</param>
+        /// <returns></returns>
+        public static bool DeleteForId(this <#=tableName#> entity,bool isRealDel = false)
+        {
+            <#=tableName#>Data data = new <#=tableName#>Data();
+            return data.DeleteForId(entity,isRealDel) > 0;
+        }
+    }
+}
+<#
+        manager.EndBlock();
+    }
+    dbSchema.Dispose();
+
+    manager.Process(true);
+#>
