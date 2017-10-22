@@ -17,20 +17,40 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Update="DataBase\Data\Base\DALAuto.tt">
+    <None Update="DataBase\Data\Base\a_DALAuto.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>DALAuto.cs</LastGenOutput>
+      <LastGenOutput>a_DALAuto.cs</LastGenOutput>
     </None>
-    <None Update="DataBase\Model\Base\ModelAuto.tt">
+    <None Update="DataBase\Model\Base\a_ModelAuto.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>a_ModelAuto.cs</LastGenOutput>
     </None>
-    <None Update="DataBase\Service\Base\BLLAuto.tt">
+    <None Update="DataBase\Service\Base\a_BLLAuto.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>a_BLLAuto.cs</LastGenOutput>
     </None>
   </ItemGroup>
 
   <ItemGroup>
     <Service Include="{508349b6-6b84-4df5-91f0-309beebad82d}" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Update="DataBase\Data\Base\a_DALAuto.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>a_DALAuto.tt</DependentUpon>
+    </Compile>
+    <Compile Update="DataBase\Model\Base\a_ModelAuto.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>a_ModelAuto.tt</DependentUpon>
+    </Compile>
+    <Compile Update="DataBase\Service\Base\a_BLLAuto.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>a_BLLAuto.tt</DependentUpon>
+    </Compile>
   </ItemGroup>
 
 </Project>

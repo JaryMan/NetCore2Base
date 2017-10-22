@@ -12542,11 +12542,11 @@
       "hideWarningsAndErrors": true
     },
     "restore": {
-      "projectUniqueName": "E:\\ASP.NET项目\\netcore2\\netcore2\\Web\\Web.csproj",
+      "projectUniqueName": "E:\\ASP.NET项目\\netcore2\\NetCore2Base\\Web\\Web.csproj",
       "projectName": "Web",
-      "projectPath": "E:\\ASP.NET项目\\netcore2\\netcore2\\Web\\Web.csproj",
+      "projectPath": "E:\\ASP.NET项目\\netcore2\\NetCore2Base\\Web\\Web.csproj",
       "packagesPath": "C:\\Users\\Administrator\\.nuget\\packages\\",
-      "outputPath": "E:\\ASP.NET项目\\netcore2\\netcore2\\Web\\obj\\",
+      "outputPath": "E:\\ASP.NET项目\\netcore2\\NetCore2Base\\Web\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"

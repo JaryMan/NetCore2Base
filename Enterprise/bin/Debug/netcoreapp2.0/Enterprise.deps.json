@@ -1,14 +1,15 @@
 {
   "runtimeTarget": {
     "name": ".NETCoreApp,Version=v2.0",
-    "signature": "48c75349256566079827324b086e114c663233ab"
+    "signature": "a4745e561788fabf24d9d0f91a1884938bc500a2"
   },
   "compilationOptions": {},
   "targets": {
     ".NETCoreApp,Version=v2.0": {
       "Enterprise/1.0.0": {
         "dependencies": {
-          "Dapper": "1.50.2"
+          "Dapper": "1.50.2",
+          "T4": "2.0.1"
         },
         "runtime": {
           "Enterprise.dll": {}
@@ -914,7 +915,8 @@
           "System.Threading": "4.0.11",
           "System.Xml.ReaderWriter": "4.0.11"
         }
-      }
+      },
+      "T4/2.0.1": {}
     }
   },
   "libraries": {
@@ -1426,6 +1428,13 @@
       "sha512": "sha512-2eZu6IP+etFVBBFUFzw2w6J21DqIN5eL9Y8r8JfJWUmV28Z5P0SNU01oCisVHQgHsDhHPnmq2s1hJrJCFZWloQ==",
       "path": "system.xml.xmldocument/4.0.1",
       "hashPath": "system.xml.xmldocument.4.0.1.nupkg.sha512"
+    },
+    "T4/2.0.1": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-M2ga3EBYkjX9WVvpKLHjwaaV09YpffHy2MSUhKDFUBLcHKGufwVQeCpgF6Af5nCb2U9bnCSUwAs1SndT8zMaJg==",
+      "path": "t4/2.0.1",
+      "hashPath": "t4.2.0.1.nupkg.sha512"
     }
   }
 }

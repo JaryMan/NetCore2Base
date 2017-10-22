@@ -45,7 +45,7 @@
 
     public class SqlServerSchema : IDBSchema
     {
-        public string ConnectionString = "Data Source=ALEX\\JACK;Initial Catalog=CityInfo-Public;Persist Security Info=True;User ID=sa;Password=123456;";
+        public string ConnectionString = "Data Source=JARY;Initial Catalog=ReportServer;Persist Security Info=True;User ID=sa;Password=123456;";
 
         public SqlConnection conn;
 

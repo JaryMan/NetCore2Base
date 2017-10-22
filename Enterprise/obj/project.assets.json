@@ -5302,11 +5302,11 @@
       "hideWarningsAndErrors": true
     },
     "restore": {
-      "projectUniqueName": "E:\\ASP.NET项目\\netcore2\\netcore2\\Enterprise\\Enterprise.csproj",
+      "projectUniqueName": "E:\\ASP.NET项目\\netcore2\\NetCore2Base\\Enterprise\\Enterprise.csproj",
       "projectName": "Enterprise",
-      "projectPath": "E:\\ASP.NET项目\\netcore2\\netcore2\\Enterprise\\Enterprise.csproj",
+      "projectPath": "E:\\ASP.NET项目\\netcore2\\NetCore2Base\\Enterprise\\Enterprise.csproj",
       "packagesPath": "C:\\Users\\Administrator\\.nuget\\packages\\",
-      "outputPath": "E:\\ASP.NET项目\\netcore2\\netcore2\\Enterprise\\obj\\",
+      "outputPath": "E:\\ASP.NET项目\\netcore2\\NetCore2Base\\Enterprise\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
