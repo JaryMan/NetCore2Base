@@ -9,6 +9,8 @@
     <Folder Include="DataBase\Model\Extend\" />
     <Folder Include="DataBase\Enmu\" />
     <Folder Include="DataBase\Service\Extend\" />
+    <Folder Include="Tools\Extend\" />
+    <Folder Include="Tools\Provider\" />
   </ItemGroup>
 
   <ItemGroup>
