@@ -1,0 +1,131 @@
+﻿<#@ template debug="true" hostspecific="true" language="C#"  #>
+<#@ output extension=".cs" #>
+<#@ assembly name="System.Core"#>
+<#@ import namespace="System"#>
+<#@ import namespace="System.Collections.Generic"#>
+<#@ include file="../../DBSchema.ttinclude"#>
+<#@ include file="../../MultiDocument.ttinclude"#>
+<# var manager = new Manager(Host, GenerationEnvironment, true) { OutputPath = Path.GetDirectoryName(Host.TemplateFile)}; #>
+
+<#
+    var dbSchema=DBSchemaFactory.GetDBSchema();
+    List<string> tableList=dbSchema.GetTablesList();
+    foreach(string tableName in tableList)
+    {
+        manager.StartBlock(tableName+"Service.cs");
+        Table table=dbSchema.GetTableMetadata(tableName);        
+#>
+using Enterprise.DataBase.Data;
+using Enterprise.DataBase.Model;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+
+namespace Enterprise.DataBase.Service
+{
+    public static partial class <#=tableName#>Serivce
+    {
+	<#
+		if(table.PKs.Count>0){
+		#>
+
+		/// <summary>
+        /// 根据主键查询记录
+        /// </summary>
+        /// <param name="id">id</param>
+        /// <returns></returns>
+        public static <#=tableName#> QueryForPK(this <#=tableName#> entity)
+        {
+            <#=tableName#>Data data = new <#=tableName#>Data();
+            return data.QueryForPK(entity);
+        }
+
+		/// <summary>
+        /// 根据主键更新数据
+        /// </summary>
+        /// <param name="entity"></param>
+        /// <returns></returns>
+        public static bool UpdateForPK(this <#=tableName#> entity)
+        {
+            <#=tableName#>Data data = new <#=tableName#>Data();
+            return data.UpdateForPK(entity) > 0;
+        }
+
+        /// <summary>
+        /// 根据主键删除记录
+        /// </summary>
+        /// <param name="id">id</param>
+        /// <returns></returns>
+        public static bool DeleteForPK(this <#=tableName#> entity)
+        {
+            <#=tableName#>Data data = new <#=tableName#>Data();
+            return data.DeleteForPK(entity) > 0;
+        }
+
+		<#}#>
+
+        /// <summary>
+        /// 查询所有记录
+        /// </summary>
+        /// <returns></returns>
+        public static IEnumerable<<#=tableName#>> QueryAll(this <#=tableName#> entity)
+        {
+            <#=tableName#>Data data = new <#=tableName#>Data();
+            return data.QueryAll();
+        }
+
+        /// <summary>
+        /// 根据查询数量获取记录
+        /// </summary>
+        /// <param name="count">记录数</param>
+        /// <returns></returns>
+        public static IEnumerable<<#=tableName#>> QueryForCount(this <#=tableName#> entity,int count = 10)
+        {
+            <#=tableName#>Data data = new <#=tableName#>Data();
+            return data.QueryForCount(count);
+        }
+
+        /// <summary>
+        /// 查询总记录数
+        /// </summary>
+        /// <returns></returns>
+        public static int QueryTotalCount(this <#=tableName#> entity)
+        {
+            <#=tableName#>Data data = new <#=tableName#>Data();
+            return data.QueryTotalCount();
+        }
+
+        /// <summary>
+        /// 分页查询
+        /// </summary>
+        /// <param name="pageIndex">页码</param>
+        /// <param name="pageCount">显示数</param>
+        /// <returns></returns>
+        public static IEnumerable<<#=tableName#>> QueryPageList(this <#=tableName#> entity)
+        {
+            <#=tableName#>Data data = new <#=tableName#>Data();
+            return data.QueryPageList(entity);
+        }
+
+        /// <summary>
+        /// 插入单条信息
+        /// </summary>
+        /// <param name="entity">实体</param>
+        /// <returns></returns>
+        public static bool Insert(this <#=tableName#> entity)
+        {
+            <#=tableName#>Data data = new <#=tableName#>Data();
+            return data.Insert(entity) > 0;
+        }
+
+
+    }
+}
+<#
+        manager.EndBlock();
+    }
+    dbSchema.Dispose();
+
+    manager.Process(true);
+#>

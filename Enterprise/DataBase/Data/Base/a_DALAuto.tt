@@ -1,0 +1,200 @@
+﻿<#@ template debug="true" hostspecific="true" language="C#"  #>
+<#@ output extension=".cs" #>
+<#@ assembly name="System.Core"#>
+<#@ import namespace="System"#>
+<#@ import namespace="System.Collections.Generic"#>
+<#@ include file="../../DBSchema.ttinclude"#>
+<#@ include file="../../MultiDocument.ttinclude"#>
+<# var manager = new Manager(Host, GenerationEnvironment, true) { OutputPath = Path.GetDirectoryName(Host.TemplateFile)}; #>
+
+<#
+    var dbSchema=DBSchemaFactory.GetDBSchema();
+    List<string> tableList=dbSchema.GetTablesList();
+    foreach(string tableName in tableList)
+    {
+        manager.StartBlock(tableName+"Data.cs");
+        Table table=dbSchema.GetTableMetadata(tableName);
+#>
+using Enterprise.DataBase.Model;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using Dapper;
+using System.Text;
+
+
+
+namespace Enterprise.DataBase.Data
+{
+    public partial class <#=tableName#>Data
+    {
+	<#
+		if(table.PKs.Count>0){
+			string str1="",str2="";
+			for(int i=0;i<table.PKs.Count;i++){
+				if(i>0) {
+					str1 += ",";
+					str2 += ",";
+				}
+				var name=table.PKs[i].UpColumnName;
+				str1 += string.Format("{0}=@{0}",name);
+				str2 += string.Format("{0} = entity.{0}",name);			
+			}		
+	#>
+
+		/// <summary>
+        /// 根据主键查询信息
+        /// </summary>
+        /// <returns></returns>
+        public <#=tableName#> QueryForPK(<#=tableName#> entity)
+        {
+            using(var dbConnection = new DbConnection())
+            {
+                return dbConnection.connection.QueryFirstOrDefault<<#=tableName#>>("select * from <#=tableName#> <#=str1#>", new { <#=str2#> });
+            }
+        }
+
+		/// <summary>
+        /// 根据主键更新数据
+        /// </summary>
+        /// <returns></returns>
+        public int UpdateForPK(<#=tableName#> entity)
+        {
+            //if(entity.Id == 0) return 0;
+            if(!entity.Validator()) return 0;
+            var parameters = new DynamicParameters();
+            var updateStr = new StringBuilder();
+<#
+        for(int i=0;i<table.Columns.Count;i++)
+        {
+            //if(table.PKs.Contains(table.Columns[i]))continue;            
+#>
+            updateStr.Append("<#=table.Columns[i].UpColumnName#>=@<#=table.Columns[i].UpColumnName#><# if(i<table.Columns.Count-1){#>,<#}#>");
+            parameters.Add("@<#=table.Columns[i].UpColumnName#>", entity.<#=table.Columns[i].UpColumnName#>); 
+     
+<#
+        }
+#>          
+            using(var dbConnection = new DbConnection())
+            {  
+                var sqlStr = string.Format("update <#=tableName#> set {0} where <#=str1#>",updateStr);
+                <# for(var i=0;i<table.PKs.Count;i++) {#> parameters.Add("@<#=table.PKs[i].UpColumnName#>", entity.<#=table.PKs[i].UpColumnName#>);<#}#>
+
+                return dbConnection.connection.Execute(sqlStr,parameters);
+            }
+        }
+
+        /// <summary>
+        /// 根据主键删除信息
+        /// </summary>
+        /// <returns></returns>
+        public int DeleteForPK(<#=tableName#> entity)
+        {
+            using(var dbConnection = new DbConnection())
+            {
+                return dbConnection.connection.Execute("Delete from  <#=tableName#> where <#=str1#>", new { <#=str2#> });
+            }
+        }
+		<#}#>
+
+        /// <summary>
+        /// 查询所有
+        /// </summary>
+        /// <returns></returns>
+        public IEnumerable<<#=tableName#>> QueryAll()
+        {
+            using(var dbConnection = new DbConnection())
+            {
+                return dbConnection.connection.Query<<#=tableName#>>("select * from <#=tableName#>");
+            }
+        }
+
+        /// <summary>
+        /// 根据查询数量获取记录
+        /// </summary>
+        /// <param name="count"></param>
+        /// <returns></returns>
+        public IEnumerable<<#=tableName#>> QueryForCount(int count)
+        {
+            using(var dbConnection = new DbConnection())
+            {
+                var sqlStr = string.Format("select top {0} * from <#=tableName#>", count);
+                return dbConnection.connection.Query<<#=tableName#>>(sqlStr);
+            }
+        }
+
+        /// <summary>
+        /// 查询总记录数
+        /// </summary>
+        /// <returns></returns>
+        public int QueryTotalCount()
+        {
+            using(var dbConnection = new DbConnection())
+            {
+               return dbConnection.connection.QueryFirst<int>("select count(0) from <#=tableName#>");
+            }
+        }
+
+        /// <summary>
+        /// 分页查询
+        /// </summary>
+        /// <returns></returns>
+        public IEnumerable<<#=tableName#>> QueryPageList(<#=tableName#> entity)
+        {
+            using(var dbConnection = new DbConnection())
+            {
+			    var sqlStr = string.Empty;
+				if(entity.SelectParameter == null)
+				{
+					sqlStr = string.Format("SELECT TOP {0} * FROM(SELECT ROW_NUMBER() OVER(ORDER BY id) AS RowNumber, *FROM  <#=tableName#>) A WHERE RowNumber > {0} * ({1} - 1)", 10, 1);
+				}
+				else
+				{
+					sqlStr = string.Format("SELECT TOP {0} * FROM(SELECT ROW_NUMBER() OVER(ORDER BY {2} {3}) AS RowNumber, *FROM  <#=tableName#>) A WHERE RowNumber > {0} * ({1} - 1)", entity.SelectParameter.PageCount, entity.SelectParameter.PageIndex, entity.SelectParameter.OrderByValue,  entity.SelectParameter.OrderBy);
+				}
+                
+                return dbConnection.connection.Query<<#=tableName#>>(sqlStr);
+            }
+        }
+
+        /// <summary>
+        /// 插入一条数据
+        /// </summary>
+        /// <param name="entity">实体对象</param>
+        /// <returns></returns>
+        public int Insert(<#=tableName#> entity)
+        {
+            if (!entity.Validator()) return 0;
+            var parameters = new DynamicParameters();
+            var valuesStr = new StringBuilder();
+            var parametersStr = new StringBuilder();
+<#
+        for(int i=0;i<table.Columns.Count;i++)
+        {
+            //if(table.Columns[i].UpColumnName=="Id")continue;            
+#>
+            valuesStr.Append("<#=table.Columns[i].UpColumnName#><# if(i<table.Columns.Count-1){#>,<#}#>");
+            parametersStr.Append("@<#=table.Columns[i].UpColumnName#><# if(i<table.Columns.Count-1){#>,<#}#>");
+            parameters.Add("@<#=table.Columns[i].UpColumnName#>", entity.<#=table.Columns[i].UpColumnName#>); 
+
+<#
+        }
+#>
+            using(var dbConnection = new DbConnection())
+            {
+                var sqlStr = string.Format("Insert Into <#=tableName#>({0}) Values({1})", valuesStr,parametersStr);
+                return dbConnection.connection.Execute(sqlStr, parameters);
+            }
+        }
+        
+
+    }
+}
+<#
+        manager.EndBlock();
+    }
+    dbSchema.Dispose();
+
+    manager.Process(true);
+#>
